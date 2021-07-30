@@ -19,7 +19,7 @@ with a specific condition so we can treat them.
 
 The current solution has an endpoint `/robots/available` which returns one robot that can treat a specific condition. However, we want to modify our system:
 - Extend the `robots/available` endpoint so it can take a DateTime object as a parameter, and return only the robots not busy during that time
-- Implement the `required_rooms` endpoint, which should return the maximum number of robots that will have an appointment at the same time during the given date. 
+- Implement the `required_rooms` endpoint. Given a day as a parameter, it should return the maximum number of appointments that will overlap in that day. 
   - b) Information returned by this endpoint does not change often, we want this information to be cached. Could you use the IMemoryCache implementation to achieve it?
 - The system is currently notifying multiple departments when one of the robots is selected in this endpoint, we want to **add a notification** to marketing department as well so they can post a picture on social media.
 
