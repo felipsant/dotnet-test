@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TechTest.Domain;
+using TechTest.Models;
 
-namespace TechTest.Data
+namespace TechTest.Repositories
 {
     public class DataContext : DbContext
     {

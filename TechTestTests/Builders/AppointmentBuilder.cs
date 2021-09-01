@@ -1,5 +1,6 @@
 using System;
-using TechTest.Domain;
+using System.Collections.Generic;
+using TechTest.Models;
 
 namespace TechTestTests.Builders
 {
@@ -18,6 +19,44 @@ namespace TechTestTests.Builders
                 EndDate = _endDate,
                 Robot = _robot,
                 RobotId = _robot.Id
+            };
+        }
+
+        public List<Appointment> BuildList()
+        {
+            return new List<Appointment>(){
+                new Appointment
+                {
+                    Id = _id,
+                    StartDate = _startDate,
+                    EndDate = _endDate,
+                    Robot = _robot,
+                    RobotId = _robot.Id
+                },
+                new Appointment
+                {
+                    Id = _id+1,
+                    StartDate = _startDate,
+                    EndDate = _endDate,
+                    Robot = _robot,
+                    RobotId = _robot.Id
+                },
+                new Appointment
+                {
+                    Id = _id+2,
+                    StartDate = _startDate,
+                    EndDate = _endDate,
+                    Robot = _robot,
+                    RobotId = _robot.Id
+                },
+                new Appointment
+                {
+                    Id = _id+3,
+                    StartDate = _startDate,
+                    EndDate = _endDate,
+                    Robot = _robot,
+                    RobotId = _robot.Id
+                }
             };
         }
 

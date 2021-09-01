@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace TechTest.Domain
+namespace TechTest.Models
 {
     public class Robot
     {

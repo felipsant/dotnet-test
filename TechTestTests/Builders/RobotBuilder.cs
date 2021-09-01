@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using TechTest.Domain;
+using TechTest.Models;
 
 namespace TechTestTests.Builders
 {

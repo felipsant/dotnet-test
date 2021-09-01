@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace TechTest.Domain
+namespace TechTest.Models
 {
     public class Appointment
     {

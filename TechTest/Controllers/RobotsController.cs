@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using TechTest.Data;
-using TechTest.Domain;
+using TechTest.Models;
+using TechTest.Repositories;
 using TechTest.Services;
 
 namespace TechTest.Controllers
@@ -11,50 +13,48 @@ namespace TechTest.Controllers
     public class RobotsController : ControllerBase
     {
         private readonly DataContext context;
+        private IRobotService RobotService;
 
         public RobotsController(DataContext context)
         {
             this.context = context;
+            var repository = new Repository(context);
+            RobotService = new RobotService(repository);
         }
 
         [HttpGet("required_rooms")]
-        public IActionResult GetRequiredRoomsForDay(DateTime date)
+        public async Task<IActionResult> GetRequiredRoomsForDay(DateTime date)
         {
-            throw new NotImplementedException();
+            int result = 0;
+            try
+            {
+                result = await RobotService.getRequiredRooms(date);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+            return base.Ok(result);
         }
 
         [HttpPost("available")]
-        public IActionResult GetAvailable(string condition)
+        public async Task<IActionResult> GetAvailable(string condition, DateTime timeAvailable)
         {
-            var repository = new Repository(context);
-
-            var robots = repository.GetRobots().Result;
             Robot robotResult = null;
-
-            int i = 0;
-            while(i < robots.Count)
+            try
             {
-                if(robotResult != null)
-                {
-                    break;
-                }
-                else if (robots[i].ConditionExpertise == condition)
-                {
-                    robotResult = robots[i];
-                }else if (robotResult == null && robots.Count == i + 1)
-                    throw new IndexOutOfRangeException();
-
-                ++i;
-            }
-
-            if(robotResult != null)
-            {
+                robotResult = await RobotService.getAvailableRobots(condition, timeAvailable);
                 (new EngineeringNotificationService()).NotifyRobotSelected(robotResult.Id);
                 (new CustomerNotificationService()).NotifyRobotSelected(robotResult.Id);
                 (new InvoicingNotificationService()).NotifyRobotSelected(robotResult.Id);
+                //TODO: Fix this because the object will be null in case it doesn't find, and this will throw exception;
+                return base.Ok(new { id = robotResult.Id, conditionExpertise = robotResult.ConditionExpertise });
             }
-
-            return base.Ok(new { id = robotResult.Id, conditionExpertise = robotResult.ConditionExpertise });
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return null;
         }
     }
 }

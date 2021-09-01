@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TechTest.Data;
-using TechTest.Domain;
+using TechTest.Repositories;
+using TechTest.Models;
 using TechTest.Services;
 
 namespace TechTest
@@ -26,7 +26,7 @@ namespace TechTest
 
             services.AddScoped<IRobotService, RobotService>();
 
-            services.AddDbContext<Data.DataContext>(opt => opt.UseInMemoryDatabase("techtestdb"));
+            services.AddDbContext<Repositories.DataContext>(opt => opt.UseInMemoryDatabase("techtestdb"));
 
             services.AddSwaggerGen();
         }
@@ -58,7 +58,7 @@ namespace TechTest
 
             using (var scope = app.ApplicationServices.CreateScope())
             {
-                var context = scope.ServiceProvider.GetService<Data.DataContext>();
+                var context = scope.ServiceProvider.GetService<Repositories.DataContext>();
                 DataSeeder.SeedData(context);
             }
         }

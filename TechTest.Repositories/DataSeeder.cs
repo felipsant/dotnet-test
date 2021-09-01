@@ -1,7 +1,7 @@
 ﻿using System;
-using TechTest.Domain;
+using TechTest.Models;
 
-namespace TechTest.Data
+namespace TechTest.Repositories
 {
     public static class DataSeeder
     {
